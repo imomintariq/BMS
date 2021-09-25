@@ -9,15 +9,17 @@ public class SavingsAccount extends BankAccount{
     }
 
     public double interestRate;
-    public void makeWithdrawal(double _amount){
+    public boolean makeWithdrawal(double _amount){
         if(_amount > this.getBalance()){
             System.out.println("You cannot withdraw more than your balance");
+            return false;
         }
         else
         {
             Transaction newTransaction = new Transaction("withdraw", _amount);
             TransactionsList.add(newTransaction);
             setBalance(getBalance() - _amount);
+            return true;
         }
 
     }

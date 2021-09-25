@@ -47,7 +47,7 @@ public class CheckingAccount extends BankAccount {
             return false;
         }
     }
-    public void makeWithdrawal(double _amount){
+    public boolean makeWithdrawal(double _amount){
         if(_amount > this.getBalance()){
             double difference = _amount - this.getBalance();
             if(difference <= 5000)
@@ -61,11 +61,12 @@ public class CheckingAccount extends BankAccount {
                 setBalance(getBalance() - _amount);
                 //Transaction Fee
                 setBalance(getBalance() - 10);
-
+                return true;
             }
 
             else{
                 System.out.println("You can only withdraw Rs.5000 more than your account balance");
+                return false;
             }
 
         }
@@ -78,8 +79,9 @@ public class CheckingAccount extends BankAccount {
             setBalance(getBalance() - _amount);
             //Transaction Fee
             setBalance(getBalance() - 10);
+            return true;
         }
-
+        return false;
     }
     public void makeDeposit(double _amount){
         Transaction newTransaction = new Transaction("deposit", _amount);

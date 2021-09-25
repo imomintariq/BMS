@@ -1,9 +1,6 @@
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class BankAccount
 {
@@ -81,10 +78,11 @@ public class BankAccount
     public void transferAmount(double _amount){
         //transfers the amount from one bank account to the bank account selected by the user
     }
-    public void makeWithdrawal(double _amount){
+    public boolean makeWithdrawal(double _amount){
         Transaction newTransaction = new Transaction("withdraw", _amount);
         TransactionsList.add(newTransaction);
         setBalance(getBalance() - _amount);
+        return true;
     }
 
     public void displayAllDeductions(){
