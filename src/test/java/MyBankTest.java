@@ -7,7 +7,7 @@ import java.util.Arrays;
 public class MyBankTest {
 
 
-   //private static MyBank bank;
+   private static MyBank bank;
 
     @BeforeClass
     public static void initialize(){
