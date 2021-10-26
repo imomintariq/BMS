@@ -6,9 +6,21 @@ import java.util.Arrays;
 @FixMethodOrder(MethodSorters.DEFAULT)
 public class MyBankTest {
 
-   private static MyBank bank;
 
-    @BeforeClass
+    @Test
+    public void modTest(){
+        BankAccount ba = new BankAccount();
+        Assert.assertEquals(ba.mode(10,2),0);
+    }
+    @Test
+    public void modTest1(){
+        BankAccount ba = new BankAccount();
+        Assert.assertNotEquals(ba.mode(5,2),0);
+    }
+
+   //private static MyBank bank;
+
+  /*  @BeforeClass
     public static void initialize(){
         bank = new MyBank(2);
         System.out.println("Before");
@@ -121,6 +133,6 @@ public class MyBankTest {
         bank.updateInterestRate(3);
         Assert.assertEquals(3,bank.getInterestRate(),0);
         Assert.assertNotEquals(2,bank.getInterestRate(),0);
-    }
+    }*/
 
 }

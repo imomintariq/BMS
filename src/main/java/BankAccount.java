@@ -54,6 +54,9 @@ public class BankAccount
         this.dateCreated = dateCreated;
     }
 
+    public int mode(int a,int b){
+        return(a%b);
+    }
     public void checkBalance(){
         //Also displays Name of the customer
         System.out.println("Balance          = " + getBalance());
