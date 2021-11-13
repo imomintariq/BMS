@@ -3,10 +3,16 @@ import java.io.IOException;  // Import the IOException class to handle errors
 import java.io.FileWriter;   // Import the FileWriter class
 import java.io.*;
 import java.io.FileNotFoundException;  // Import this class to handle errors
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner; // Import the Scanner class to read text files
+import java.lang.Object;
+
+import static oracle.jdbc.OracleDriver.getJDBCVersion;
 
 public class Main
 {
@@ -389,7 +395,8 @@ public class Main
             System.out.println("3. Specify the Interest Rate");//Specify the Interest Rate, applicable to all Saving Accounts
             System.out.println("4. Display all account details, including the bank owner details");//Display all account details, including the bank owner details
             System.out.println("5. Display all accounts deductions along with account details");//Display all accounts deductions along with account details
-            System.out.println("6. Exit Program");
+            System.out.println("6. Save Data");
+            System.out.println("7. Exit Program");
             choice = input.nextInt();
             switch (choice){
                 case 1:
@@ -407,6 +414,24 @@ public class Main
                     Customers customer = new Customers(accNumber, name,address, phone);
                     customersList.add(customer);
                     System.out.println("You are now a registered Bank Customer");
+
+                    System.out.println("Where do you want to save your data");
+                    System.out.println("1. File");
+                    System.out.println("2. Oracle");
+                    System.out.println("3. MySql");
+                    int db = input.nextInt();
+                    if(db<1 || db > 3){
+                        System.out.println("Invalid Input");
+                    }
+                    else if(db == 1){
+                        saveInFile();
+                    }
+                    else if(db == 2){
+                        saveInOracle(customer);
+                    }
+                    else if(db == 3){
+                        saveInMySql();
+                    }
 
                     System.out.println("1. Create an Account");
                     System.out.println("2. Back to Menu");
@@ -490,6 +515,7 @@ public class Main
                         customersList.get(i).displayAllDeductions();
                     }
                     break;
+
                 case 6:
                     System.out.println("Exiting Program...");
                     System.exit(0);
@@ -499,6 +525,35 @@ public class Main
                     break;
             }
         }
+    }
+
+    private static void saveInMySql() {
+    }
+
+    private static void saveInOracle(Customers customer) {
+        try{
+
+            System.out.println(getJDBCVersion());
+            Class.forName("oracle.jdbc.driver.OracleDriver");
+            System.out.println("Driver Loaded");
+            Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1523:mominn","scott", "tiger");
+            System.out.println("Connection Established");
+            String sql = "INSERT INTO SCOTT.ACCOUNT_HOLDER (NAME, ADDRESS, PHONE_NUMBER, ACCOUNT_NUMBER) VALUES (?, ?, ?, ?)";
+            PreparedStatement statement = con.prepareStatement(sql);
+            statement.setString(1, customer.getFullName());
+            statement.setString(2, customer.getAddress());
+            statement.setString(3, customer.getPhoneNumber());
+            statement.setLong(4, customer.getAccountNumber());
+            int rowInserted = statement.executeUpdate();
+            if(rowInserted> 0){
+                System.out.println("Inserted into Oracle");
+            }
+        }catch(Exception e){
+            System.out.println("Exception Thrown");
+        }
+    }
+
+    private static void saveInFile() {
     }
 }
 
