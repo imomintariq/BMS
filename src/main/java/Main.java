@@ -531,7 +531,7 @@ public class Main
     }
 
     private static void saveInOracle(Customers customer) {
-        try{
+     /*   try{
 
             System.out.println(getJDBCVersion());
             Class.forName("oracle.jdbc.driver.OracleDriver");
@@ -550,7 +550,7 @@ public class Main
             }
         }catch(Exception e){
             System.out.println("Exception Thrown");
-        }
+        }*/
     }
 
     private static void saveInFile() {
